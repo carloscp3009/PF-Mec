@@ -20,6 +20,7 @@ new_pop4 = np.random.uniform(low=0, high=9, size=pop_size)
 new_population = np.concatenate((new_pop1,new_pop2, new_pop3, new_pop4),axis=1)
 print('Random Population:\n',new_population,'\n')
 
+
 # Number of Parents
 num_parents = int(num_kromo/2)
 k = 20 # Number of Generations
@@ -37,7 +38,7 @@ for i in range(k):
     print('Parents Selected:\n',parents, '\n')
 
     # Crossover
-    offspring_cross = ga.crossover(parents,new_population.shape[0])
+    offspring_cross = ga.crossover(parents,num_kromo)
     print('crossover:\n',offspring_cross, '\n')
 
     # Mutation

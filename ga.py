@@ -14,6 +14,7 @@ def select_parents(pop, fitness, num_parents):
         fitness[max_fit_index] = -999999999
     return parents
 
+
 def crossover(parents,num_children):
     children = np.zeros([num_children,parents.shape[1]])
     crossover_point = np.int(parents.shape[1]/2)

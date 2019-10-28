@@ -9,7 +9,7 @@ span = [[0,0,0,0],[9,9,9,9]]
 
 # Number of variables for optimization
 num_var = 4
-num_kromo = 8
+num_kromo = 5
 pop_size = (num_kromo, 1)
 
 new_pop1 = np.random.uniform(low=0, high=9, size=pop_size)
@@ -23,7 +23,7 @@ print('Random Population:\n',new_population,'\n')
 
 # Number of Parents
 num_parents = int(num_kromo/2)
-k = 20 # Number of Generations
+k = 1 # Number of Generations
 
 Global_fitness = []
 
@@ -42,7 +42,7 @@ for i in range(k):
     print('crossover:\n',offspring_cross, '\n')
 
     # Mutation
-    mut_prob = 0.3
+    mut_prob = 0.4
     offspring_mut = ga.mutation(offspring_cross,span, mut_prob)
     print('Mutation:\n',offspring_mut, '\n')
 

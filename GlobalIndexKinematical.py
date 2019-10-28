@@ -105,19 +105,36 @@ def LocalIndexes(L, J):
     Vm = np.amin(k)/lt
     Vi = np.power(np.product(k),1/3)/np.average(k)
     Kj = 1/(np.linalg.det(J)*np.linalg.det(np.linalg.pinv(J)))
-    return Mr, Vm, Vi, Kj
+    return np.matrix([Mr, Vm, Vi, Kj])
 
-#def GlobalIntegrated(E):
-
-def WorkspaceDesired(Len, stepsize = 0.1):
+def WorkspaceDesired(Len = 1, dZ = 0, stepsize = 0.1):
     Pi = np.matrix(np.arange(0.0,Len+stepsize,stepsize))
+    m = Pi.shape[1]
     M1 = np.matrix(np.ones_like(Pi)).T
     Pi = M1*Pi
     Pj = Pi.T
     Pi = np.reshape(Pi,(-1,1),order='F').T
     Pj = np.reshape(Pj,(-1,1),order='F').T
-    P  = np.concatenate((Pi,Pj)).T
+    M1 = np.matrix(np.ones((1,m))).T
+    Pi = M1*Pi
+    Pj = M1*Pj
+    Pk = np.reshape(Pi,(-1,1),order='F').T - dZ
+    Pi = np.reshape(Pi,(-1,1),order='C').T - Len/2
+    Pj = np.reshape(Pj,(-1,1),order='C').T - Len/2
+    P  = np.concatenate((Pi,Pj,Pk)).T
+    #P = Pi
     return P
+
+def AllIndex(L):
+    P = WorkspaceDesired(500.0,650.0,5.0)
+    P = P.copy()
+    I = []
+    for ii in range(P.shape[0]):
+        print(f'ii = {ii}',end='\n')
+        Theta, Q, Beta = InverseKinematics(L,P[ii])
+        J = JacobianQ(L, Theta, Q, Beta)
+        I.append(LocalIndexes(L, J))
+    return I
 
 """
     Study Case
@@ -129,13 +146,9 @@ if __name__ == "__main__":
     L_A = 70.0
     L_D = 200.0
     e   = 69.4-12.4
-    #P = np.matrix([0, 0, -500]).T
     L = [R_b, L_A, L_D, e]
-    P = WorkspaceDesired(5.0,2.5)
-    print(P)
-    #Theta, Q, Beta = InverseKinematics(L,P)
-    #J = JacobianQ(L, Theta, Q, Beta)
-    #Mr = LocalIndexes(L, J)
-    #print('Indexes = ',Mr)
+    I = AllIndex(L)
+    #print(I.shape)
+    #P = WorkspaceDesired(500.0,650.0,5.0)
+    #print(P[0])
 
-    

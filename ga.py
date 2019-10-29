@@ -1,5 +1,5 @@
 import numpy as np
-import kinematics as km
+import GlobalIndexKinematical as km
 
 def fitness(equation_inputs, pop):
     # 
@@ -44,13 +44,14 @@ def mutation(offspring_cross,span,threshold):
     return offspring_cross
 
 def fitnessK(population):
-    pop = population[0]
-    P = np.matrix([0, 0, -500])
-    Theta, Q, Beta = km.InverseKinematics(pop,P)
-    print('Theta: ',Theta)
-    print('Q: ',Q)
-    print('Beta: ',Beta)
-    Jq = km.JacobianQ(pop, Theta, Q, Beta)
-    print('Jq: ', Jq)
-    return True
+    fitness_population = []
+    for L in population:
+        I = km.AllIndex(L)
+        I = km.IntegratedIndex(I)
+        I = km.GlobalIndex(I)
+        fitness_population.append(I)
+    fitness_population = np.matrix(fitness_population)
+    return fitness_population
+
+
 

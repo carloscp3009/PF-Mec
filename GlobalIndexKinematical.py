@@ -99,7 +99,8 @@ def JacobianQ(L, Theta, Q, Beta):
 """
 
 def LocalIndexes(L, J):
-    k, v = np.linalg.eig(J*J.T)
+    k = np.linalg.eig(J*J.T)
+    k = k[0]
     #print(k)
     lt= np.sum(L)
     Mr = np.power(np.product(k),1/3)/lt**2

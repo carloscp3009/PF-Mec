@@ -106,7 +106,8 @@ def LocalIndexes(L, J):
     Mr = np.power(np.product(k),1/3)/lt**2
     Vm = np.amin(k)/lt
     Vi = np.power(np.product(k),1/3)/np.average(k)
-    Kj = 1/(np.linalg.det(J)*np.linalg.det(np.linalg.pinv(J)))
+    #Kj = 1/(np.linalg.det(J)*np.linalg.det(np.linalg.pinv(J)))
+    Kj = np.sqrt(np.amin(k)/np.amax(k))
     return [Mr, Vm, Vi, Kj]
 
 def WorkspaceDesired(Len = 1, dZ = 0, stepsize = 0.1):
@@ -128,8 +129,10 @@ def WorkspaceDesired(Len = 1, dZ = 0, stepsize = 0.1):
     return P
 
 def AllIndex(L):
-    P = WorkspaceDesired(500.0,650.0,10.0)
-    #P = WorkspaceDesired(50.0,650.0,25.0)
+    #P = WorkspaceDesired(500.0,650.0,5.0)
+    #P = WorkspaceDesired(500.0,650.0,10.0)
+    P = WorkspaceDesired(500.0,650.0,15.0)
+    #P = WorkspaceDesired(500.0,650.0,20.0)
     P = P.copy()
     I = []
     for ii in range(P.shape[0]):
@@ -175,8 +178,10 @@ if __name__ == "__main__":
     e   = 69.4-12.4
     L = [R_b, L_A, L_D, e]
     I = AllIndex(L)
+    #print('All Index \n',I)
+    n = I.shape[0]
     I = IntegratedIndex(I)
     I = GlobalIndex(I)
     seconds = time.time() - seconds
-    print(f'Ejemplo fue ejecutado en {seconds} s y dio como resultado {I[0]}')
+    print(f'Ejemplo fue ejecutado en {seconds} s, probando en {n} puntos y dio como resultado {I[0,0]}')
 

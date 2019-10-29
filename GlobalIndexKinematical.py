@@ -8,6 +8,7 @@
     Numpy as principal library, due to the matrix computations
 """
 import numpy as np
+import scipy.stats as sp
 
 """
     Inverse Kinematics
@@ -105,7 +106,7 @@ def LocalIndexes(L, J):
     Vm = np.amin(k)/lt
     Vi = np.power(np.product(k),1/3)/np.average(k)
     Kj = 1/(np.linalg.det(J)*np.linalg.det(np.linalg.pinv(J)))
-    return np.matrix([Mr, Vm, Vi, Kj])
+    return [Mr, Vm, Vi, Kj]
 
 def WorkspaceDesired(Len = 1, dZ = 0, stepsize = 0.1):
     Pi = np.matrix(np.arange(0.0,Len+stepsize,stepsize))
@@ -126,15 +127,38 @@ def WorkspaceDesired(Len = 1, dZ = 0, stepsize = 0.1):
     return P
 
 def AllIndex(L):
-    P = WorkspaceDesired(500.0,650.0,5.0)
+    P = WorkspaceDesired(500.0,650.0,10.0)
+    #P = WorkspaceDesired(50.0,650.0,25.0)
     P = P.copy()
     I = []
     for ii in range(P.shape[0]):
-        print(f'ii = {ii}',end='\n')
+        #print(f'ii = {ii}',end='\n')
         Theta, Q, Beta = InverseKinematics(L,P[ii])
         J = JacobianQ(L, Theta, Q, Beta)
         I.append(LocalIndexes(L, J))
+    I = np.matrix(I)
     return I
+
+def IntegratedIndex(I):
+    I_ave = np.average(I,axis = 0)
+    I_std = np.std(I,axis=0)
+    I_vol = I_std/I_ave
+    I_skw = sp.skew(I,axis = 0)
+    I_krt = sp.kurtosis(I,axis = 0)
+    I_max = np.amax(I,axis = 0)
+    M1 = np.concatenate((np.ones((1,4)),-1*I_ave,-0.1*I_ave,-0.1*I_ave))
+    I_int = np.concatenate((I_ave,I_vol,[I_skw],[I_krt]))
+    I_int = np.multiply(M1,I_int)
+    I_int = np.sum(I_int,axis = 0)
+    I_int = np.concatenate((I_int,I_max))
+    return I_int
+
+def GlobalIndex(I):
+    W = np.matrix([9, 5, 7, 3])
+    W = W/np.linalg.norm(W)
+    B  = np.divide(W,I[1]).T
+    GI = I[0]*B
+    return GI
 
 """
     Study Case
@@ -142,13 +166,16 @@ def AllIndex(L):
 
 if __name__ == "__main__":
     pass
+    import time
+    seconds = time.time()
     R_b = 683.01
     L_A = 70.0
     L_D = 200.0
     e   = 69.4-12.4
     L = [R_b, L_A, L_D, e]
     I = AllIndex(L)
-    #print(I.shape)
-    #P = WorkspaceDesired(500.0,650.0,5.0)
-    #print(P[0])
+    I = IntegratedIndex(I)
+    I = GlobalIndex(I)
+    seconds = time.time() - seconds
+    print(f'Ejemplo fue ejecutado en {seconds} s y dio como resultado {I[0]}')
 

@@ -128,13 +128,13 @@ def WorkspaceDesired(Len = 1, dZ = 0, stepsize = 0.1):
     #P = Pi
     return P
 
-def AllIndex(L):
+def AllIndex(L,P):
     #P = WorkspaceDesired(500.0,650.0,5.0)
     #P = WorkspaceDesired(500.0,650.0,10.0)
     #P = WorkspaceDesired(500.0,650.0,15.0)
     #P = WorkspaceDesired(500.0,650.0,20.0)
-    P = WorkspaceDesired(500.0,650.0,50.0)
-    P = P.copy()
+    #P = WorkspaceDesired(500.0,650.0,50.0)
+    #P = P.copy()
     I = []
     for ii in range(P.shape[0]):
         #print(f'ii = {ii}',end='\n')

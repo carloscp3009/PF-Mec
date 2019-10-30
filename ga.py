@@ -43,13 +43,13 @@ def mutation(offspring_cross,span,threshold):
     
     return offspring_cross
 
-def fitnessK(population):
+def fitnessK(population,P):
     fitness_population = []
     C = 1
     for L in population:
         print('Chromosome ',C,end=' - ')
         C = C + 1
-        I = km.AllIndex(L)
+        I = km.AllIndex(L,P)
         I = km.IntegratedIndex(I)
         I = km.GlobalIndex(I).tolist()
         fitness_population.append(I[0][0])

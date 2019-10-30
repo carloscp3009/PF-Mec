@@ -131,8 +131,9 @@ def WorkspaceDesired(Len = 1, dZ = 0, stepsize = 0.1):
 def AllIndex(L):
     #P = WorkspaceDesired(500.0,650.0,5.0)
     #P = WorkspaceDesired(500.0,650.0,10.0)
-    P = WorkspaceDesired(500.0,650.0,15.0)
+    #P = WorkspaceDesired(500.0,650.0,15.0)
     #P = WorkspaceDesired(500.0,650.0,20.0)
+    P = WorkspaceDesired(500.0,650.0,50.0)
     P = P.copy()
     I = []
     for ii in range(P.shape[0]):
@@ -162,6 +163,7 @@ def GlobalIndex(I):
     W = W/np.linalg.norm(W)
     B  = np.divide(W,I[1]).T
     GI = I[0]*B
+    GI.tolist()
     return GI
 
 """
@@ -184,4 +186,5 @@ if __name__ == "__main__":
     I = GlobalIndex(I)
     seconds = time.time() - seconds
     print(f'Ejemplo fue ejecutado en {seconds} s, probando en {n} puntos y dio como resultado {I[0,0]}')
+    #print()
 

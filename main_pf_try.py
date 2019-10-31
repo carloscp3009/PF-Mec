@@ -9,7 +9,7 @@ span = [[500,50,50,-100],[1000,250,250,100]]
 
 # Number of variables for optimization
 num_var = 4
-num_kromo = 5
+num_kromo = 10
 pop_size = (num_kromo, 1)
 
 new_pop1 = np.random.uniform(span[0][0], span[1][0], size=pop_size)
@@ -25,15 +25,18 @@ P = km.WorkspaceDesired(500.0,650.0,50.0)
 
 # Number of Parents
 num_parents = int(num_kromo/2)
-k = 10 # Number of Generations
+k = 50 # Number of Generations
 
 Global_fitness = []
+Avg_fitness=[]
 
 for i in range(k):
     # Evaluate Fitness
-    print('\n',f'Evaluate Fitness of Generation {i}:')
+    print('\n','Evaluate Fitness of Generation {i}:')
     fitness = ga.fitnessK(new_population,P)
     Global_fitness.append(max(fitness))
+    print('Avg Fitness',sum(fitness)/len(fitness))
+    Avg_fitness.append(sum(fitness)/len(fitness))
     #print('Fitness:\n',fitness,'\n')
 
     # Select Best Fitness
@@ -45,7 +48,7 @@ for i in range(k):
     print('crossover:\n',offspring_cross, '\n')
 
     # Mutation
-    mut_prob = 0.4
+    mut_prob = 0.6
     offspring_mut = ga.mutation(offspring_cross,span, mut_prob)
     print('Mutation:\n',offspring_mut, '\n')
 
@@ -53,13 +56,15 @@ for i in range(k):
     new_population = np.concatenate((parents, offspring_mut))
     print('Generation ', i, ':\n', new_population)
 
-print('\n',f'Evaluate Fitness of Generation {k}:')
+print('\n','Evaluate Fitness of Generation {k}:')
 fitness = ga.fitnessK(new_population,P)
 Global_fitness.append(max(fitness))
 
 #print(Global_fitness)
+print(new_population[fitness.index(max(fitness))])
 
 plt.plot(Global_fitness,'b-')
+plt.plot(Avg_fitness,'r-')
 
 plt.xlabel('# Generaciones')
 plt.show()

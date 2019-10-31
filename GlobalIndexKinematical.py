@@ -185,6 +185,6 @@ if __name__ == "__main__":
     I = IntegratedIndex(I)
     I = GlobalIndex(I)
     seconds = time.time() - seconds
-    print(f'Ejemplo fue ejecutado en {seconds} s, probando en {n} puntos y dio como resultado {I[0,0]}')
+    print('Ejemplo fue ejecutado en {seconds} s, probando en {n} puntos y dio como resultado {I[0,0]}')
     #print()
 

@@ -32,8 +32,8 @@ Avg_fitness=[]
 
 for i in range(k):
     # Evaluate Fitness
-    print('\n','Evaluate Fitness of Generation {i}:')
-    fitness = ga.fitnessK(new_population,P)
+    print('\n',f'Evaluate Fitness of Generation {i}:')
+    fitness = ga.fitnessK(new_population,P,True)
     Global_fitness.append(max(fitness))
     print('Avg Fitness',sum(fitness)/len(fitness))
     Avg_fitness.append(sum(fitness)/len(fitness))
@@ -56,7 +56,7 @@ for i in range(k):
     new_population = np.concatenate((parents, offspring_mut))
     print('Generation ', i, ':\n', new_population)
 
-print('\n','Evaluate Fitness of Generation {k}:')
+print('\n',f'Evaluate Fitness of Generation {k}:')
 fitness = ga.fitnessK(new_population,P)
 Global_fitness.append(max(fitness))
 

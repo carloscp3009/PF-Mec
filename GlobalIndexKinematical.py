@@ -165,7 +165,7 @@ def GlobalIndex(I):
     GI = I[0]*B
     GI.tolist()
     if np.iscomplex(GI):
-        GI = 0
+        GI = np.matrix([0])
     return GI
 
 """

@@ -31,29 +31,32 @@ def crossover(parents,num_children):
 
     return children
 
-def mutation(offspring_cross,span,threshold):
+def mutation(offspring_cross,span,threshold, show = False):
     #offspring_cross = np.concatenate((offspring_cross,offspring_cross))
     for child in range(offspring_cross.shape[0]):
         p = np.random.uniform(0,1,1)
         if p < threshold :
             k = np.random.randint(0, offspring_cross.shape[1])
-            print('Mutation on child: ', child,' - Gen: ', k, '\n')
+            if(show):
+                print('Mutation on child: ', child,' - Gen: ', k, '\n')
             mut_value = np.random.uniform(span[0][k], span[1][k], 1)
             offspring_cross[child,k] = mut_value
     
     return offspring_cross
 
-def fitnessK(population,P):
+def fitnessK(population,P,show = True):
     fitness_population = []
     C = 1
     for L in population:
-        print('Chromosome ',C,end=' - ')
+        if(show):
+            print('Chromosome ',C,end=' - ')
         C = C + 1
         I = km.AllIndex(L,P)
         I = km.IntegratedIndex(I)
         I = km.GlobalIndex(I).tolist()
         fitness_population.append(I[0][0])
-        print('fitness ',I[0][0])
+        if(show):
+            print('fitness ',I[0][0])
     #print(fitness_population)
     #fitness_population = np.matrix(fitness_population).T
     return fitness_population

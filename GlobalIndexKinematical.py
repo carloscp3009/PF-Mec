@@ -164,6 +164,8 @@ def GlobalIndex(I):
     B  = np.divide(W,I[1]).T
     GI = I[0]*B
     GI.tolist()
+    if np.iscomplex(GI):
+        GI = 0
     return GI
 
 """

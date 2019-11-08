@@ -1,5 +1,11 @@
 import numpy as np
 import GlobalIndexKinematical as km
+from mpl_toolkits.mplot3d import Axes3D
+
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+import matplotlib.cm as cmx
+
 
 def fitness(equation_inputs, pop):
     # 
@@ -58,5 +64,49 @@ def fitnessK(population,P):
     #fitness_population = np.matrix(fitness_population).T
     return fitness_population
 
+def grapht(L,P):
+    idx = km.AllIndex(L,P)
+    x = P[:,0]
+    y = P[:,1] 
+    z = P[:,2]
 
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    
+    jet = plt.get_cmap('jet') 
+    cNorm  = colors.Normalize(vmin=0, vmax=10)
+    scalarMap = cmx.ScalarMappable( cmap=jet)
+            
+    for i in range(len(x)):
+        colorVal = scalarMap.to_rgba(idx[i,0])
+        ax.scatter(x[i],y[i],z[i],c=colorVal)                
+    
+    plt.show()
+    return True
+
+def graphK(L,P):
+    idx = km.AllIndex(L,P)
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    
+    x = P[:,0]
+    y = P[:,1] 
+    z = P[:,2]
+
+    
+    print(idx)
+    colors=plt.cm.jet(idx[:,0])
+    print(colors)
+    print(type())
+
+    # colors=plt.cm.jet(idx[0:500])
+    
+    plt.style.context(('ggplot')) 
+    ax.scatter(x, y, z,c=colors, s=50)
+    
+    plt.show()
+    return True
+
+
+    
 

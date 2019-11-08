@@ -9,7 +9,7 @@ span = [[500,50,50,-100],[1000,250,250,100]]
 
 # Number of variables for optimization
 num_var = 4
-num_kromo = 10
+num_kromo = 5
 pop_size = (num_kromo, 1)
 
 new_pop1 = np.random.uniform(span[0][0], span[1][0], size=pop_size)
@@ -25,14 +25,14 @@ P = km.WorkspaceDesired(500.0,650.0,50.0)
 
 # Number of Parents
 num_parents = int(num_kromo/2)
-k = 50 # Number of Generations
+k = 2 # Number of Generations
 
 Global_fitness = []
 Avg_fitness=[]
 
 for i in range(k):
     # Evaluate Fitness
-    print('\n','Evaluate Fitness of Generation {i}:')
+    print('\n','Evaluate Fitness of Generation:', i)
     fitness = ga.fitnessK(new_population,P)
     Global_fitness.append(max(fitness))
     print('Avg Fitness',sum(fitness)/len(fitness))
@@ -61,10 +61,13 @@ fitness = ga.fitnessK(new_population,P)
 Global_fitness.append(max(fitness))
 
 #print(Global_fitness)
-print(new_population[fitness.index(max(fitness))])
+winner_chromo = new_population[fitness.index(max(fitness))]
+print(winner_chromo)
 
 plt.plot(Global_fitness,'b-')
 plt.plot(Avg_fitness,'r-')
 
 plt.xlabel('# Generaciones')
 plt.show()
+
+gr = ga.grapht(winner_chromo, P)

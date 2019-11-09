@@ -70,4 +70,4 @@ plt.plot(Avg_fitness,'r-')
 plt.xlabel('# Generaciones')
 plt.show()
 
-gr = ga.grapht(winner_chromo, P)
+gr = ga.graphBet(winner_chromo, P)

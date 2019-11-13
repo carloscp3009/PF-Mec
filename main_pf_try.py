@@ -3,13 +3,14 @@ import matplotlib.pyplot as plt
 import ga
 import GlobalIndexKinematical as km
 
+
 # Inputs or constants
 span = [[500,50,50,-100],[1000,250,250,100]]
 
 
 # Number of variables for optimization
 num_var = 4
-num_kromo = 5
+num_kromo = 10
 pop_size = (num_kromo, 1)
 
 new_pop1 = np.random.uniform(span[0][0], span[1][0], size=pop_size)
@@ -25,19 +26,25 @@ P = km.WorkspaceDesired(500.0,650.0,50.0)
 
 # Number of Parents
 num_parents = int(num_kromo/2)
-k = 2 # Number of Generations
+k = 120 # Number of Generations
 
 Global_fitness = []
 Avg_fitness=[]
+Minor_fitness=[]
+Mf_chromo=[]
 
 for i in range(k):
     # Evaluate Fitness
     print('\n','Evaluate Fitness of Generation:', i)
     fitness = ga.fitnessK(new_population,P)
     Global_fitness.append(max(fitness))
+
+    # Average Fitness
     print('Avg Fitness',sum(fitness)/len(fitness))
     Avg_fitness.append(sum(fitness)/len(fitness))
-    #print('Fitness:\n',fitness,'\n')
+    # fitness Down
+    Minor_fitness.append(min(fitness))
+    Mf_chromo.append(new_population[fitness.index(min(fitness))])
 
     # Select Best Fitness
     parents = ga.select_parents(new_population,fitness,num_parents)
@@ -56,13 +63,25 @@ for i in range(k):
     new_population = np.concatenate((parents, offspring_mut))
     print('Generation ', i, ':\n', new_population)
 
-print('\n','Evaluate Fitness of Generation {k}:')
+
+print('\n','Evaluate Fitness of Generation',i,': ')
 fitness = ga.fitnessK(new_population,P)
 Global_fitness.append(max(fitness))
 
-#print(Global_fitness)
+# Best Child
 winner_chromo = new_population[fitness.index(max(fitness))]
-print(winner_chromo)
+print('Best Chromo: ',winner_chromo)
+
+Loser_chromo = Mf_chromo[Minor_fitness.index(min(Minor_fitness))]
+lose_local_idx = km.AllIndex(Loser_chromo,P)
+np.savetxt('lose_local_idxs.csv', lose_local_idx, delimiter = ',')
+
+win_local_idx = km.AllIndex(winner_chromo,P)
+np.savetxt('win_local_idxs.csv', win_local_idx, delimiter = ',')
+
+np.savetxt('Global_idx.csv',Global_fitness, delimiter = ',')
+np.savetxt('Avg_idx.csv',Avg_fitness, delimiter = ',')
+
 
 plt.plot(Global_fitness,'b-')
 plt.plot(Avg_fitness,'r-')
@@ -70,4 +89,4 @@ plt.plot(Avg_fitness,'r-')
 plt.xlabel('# Generaciones')
 plt.show()
 
-gr = ga.graphBet(winner_chromo, P)
+

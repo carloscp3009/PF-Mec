@@ -1,29 +1,19 @@
 import numpy as np
+import seaborn as sns
 import matplotlib.pyplot as plt
-import ga
-import GlobalIndexKinematical as km
-from mpl_toolkits.mplot3d import Axes3D
 
-P = km.WorkspaceDesired(500.0,650.0,50.0)
-idx = range(len(P[:,0]))
+# Set up the matplotlib figure
+f, axes = plt.subplots(2, 2, figsize=(7, 7), sharex=True)
+sns.despine(left=True)
 
-#idx = range(len(P[0:500,0]))
+# Generate a random univariate dataset
+d = np.genfromtxt('Global_idx.csv', delimiter=',') 
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
 
-x = P[:,0]
-y = P[:,1] 
-z = P[:,2]
-# x = P[0:500,0]
-# y = P[0:500,1] 
-# z = P[0:500,2]
+# Plot a filled kernel density estimate
+sns.lmplot(d, hist=False, color="g", kde_kws={"shade": True}, ax=axes[1, 0])
 
-colors=plt.cm.jet(idx)
-print(type(colors))
-# colors=plt.cm.jet(idx[0:500])
 
-plt.style.context(('ggplot')) 
-ax.scatter(x, y, z,c=colors, s=50)
-
+plt.setp(axes, yticks=[])
+plt.tight_layout()
 plt.show()

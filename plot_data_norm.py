@@ -29,6 +29,16 @@ idx6 = 1-(idx6-min(idx2))/(max(idx6)-min(idx2))
 idx7 = 1-(idx7-min(idx3))/(max(idx7)-min(idx3))
 idx8 = 1-(idx8-min(idx4))/(max(idx8)-min(idx4))
 
+print('max: ', max(idx1),', min: ', min(idx1))
+print('max: ', max(idx2),', min: ', min(idx2))
+print('max: ', max(idx3),', min: ', min(idx3))
+print('max: ', max(idx4),', min: ', min(idx4))
+print('max: ', max(idx5),', min: ', min(idx5))
+print('max: ', max(idx6),', min: ', min(idx6))
+print('max: ', max(idx7),', min: ', min(idx7))
+print('max: ', max(idx8),', min: ', min(idx8))
+
+
 fig = plt.figure()
 ax1 = fig.add_subplot(241, projection='3d')
 ax2 = fig.add_subplot(242, projection='3d')
@@ -50,12 +60,57 @@ colors8=plt.cm.jet(idx8)
 
 plt.style.context(('ggplot')) 
 ax1.scatter(x, y, z,c=colors1, s=20, alpha=0.7)
-ax2.scatter(x, y, z,c=colors2, s=20, alpha=0.7)
+ax2.scatter(x, y, z,c=colors1, s=20, alpha=0.7)
 ax3.scatter(x, y, z,c=colors3, s=20, alpha=0.7)
 ax4.scatter(x, y, z,c=colors4, s=20, alpha=0.7)
 ax5.scatter(x, y, z,c=colors5, s=20, alpha=0.7)
 ax6.scatter(x, y, z,c=colors6, s=20, alpha=0.7)
 ax7.scatter(x, y, z,c=colors7, s=20, alpha=0.7)
 ax8.scatter(x, y, z,c=colors8, s=20, alpha=0.7)
+
+ax1.set_title('Mr inicial')
+ax2.set_title('Vm inicial')
+ax3.set_title('\u03BCr inicial')
+ax4.set_title('Kj inicial')
+ax5.set_title('Mr optimizado')
+ax6.set_title('Vm optimizado')
+ax7.set_title('\u03BCr optimizado')
+ax8.set_title('Kj optimizado')
+
+# frame1 = plt.gca()
+# frame1.axes.get_xaxis().set_ticks([])
+# frame1.axes.get_yaxis().set_ticks([])
+
+ax1.xaxis.set_major_formatter(plt.NullFormatter())
+ax1.yaxis.set_major_formatter(plt.NullFormatter())
+ax1.zaxis.set_major_formatter(plt.NullFormatter())
+
+ax2.xaxis.set_major_formatter(plt.NullFormatter())
+ax2.yaxis.set_major_formatter(plt.NullFormatter())
+ax2.zaxis.set_major_formatter(plt.NullFormatter())
+
+ax3.xaxis.set_major_formatter(plt.NullFormatter())
+ax3.yaxis.set_major_formatter(plt.NullFormatter())
+ax3.zaxis.set_major_formatter(plt.NullFormatter())
+
+ax4.xaxis.set_major_formatter(plt.NullFormatter())
+ax4.yaxis.set_major_formatter(plt.NullFormatter())
+ax4.zaxis.set_major_formatter(plt.NullFormatter())
+
+ax5.xaxis.set_major_formatter(plt.NullFormatter())
+ax5.yaxis.set_major_formatter(plt.NullFormatter())
+ax5.zaxis.set_major_formatter(plt.NullFormatter())
+
+ax6.xaxis.set_major_formatter(plt.NullFormatter())
+ax6.yaxis.set_major_formatter(plt.NullFormatter())
+ax6.zaxis.set_major_formatter(plt.NullFormatter())
+
+ax7.xaxis.set_major_formatter(plt.NullFormatter())
+ax7.yaxis.set_major_formatter(plt.NullFormatter())
+ax7.zaxis.set_major_formatter(plt.NullFormatter())
+
+ax8.xaxis.set_major_formatter(plt.NullFormatter())
+ax8.yaxis.set_major_formatter(plt.NullFormatter())
+ax8.zaxis.set_major_formatter(plt.NullFormatter())
 
 plt.show()
